@@ -1,12 +1,25 @@
-import { mockData } from "../mockData.js";
+import axios from "axios";
+// import { mockData } from "../mockData.js";
+
 import TYPES from "./types";
 
 export const fetchRentals = () => {
-  return {
-    type: TYPES.FETCH_RENTALS,
-    rentals: mockData
+  return dispatch => {
+    axios
+      .get(`/api/v1/rentals/`)
+      .then(res => res.data || [])
+      .then(rentals => dispatch(fetchRentalsSuccess(rentals)));
   };
 };
+
+const fetchRentalsSuccess = rentals => {
+  return {
+    type: TYPES.FETCH_RENTALS_SUCCESS,
+    rentals
+  };
+};
+
+const fetchRentalsError = () => {};
 
 const fetchRentalByIdSuccess = selectedRental => {
   return {
@@ -24,9 +37,10 @@ const fetchRentalByIdInit = () => {
 export const fetchRentalById = rentalId => {
   return dispatch => {
     dispatch(fetchRentalByIdInit());
-    setTimeout(() => {
-      const selectedRental = mockData.find(rental => rental.id === rentalId);
-      dispatch(fetchRentalByIdSuccess(selectedRental));
-    }, 1000);
+
+    axios
+      .get(`/api/v1/rentals/${rentalId}`)
+      .then(res => res.data)
+      .then(selectedRental => dispatch(fetchRentalByIdSuccess(selectedRental)));
   };
 };
