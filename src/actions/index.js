@@ -44,3 +44,12 @@ export const fetchRentalById = rentalId => {
       .then(selectedRental => dispatch(fetchRentalByIdSuccess(selectedRental)));
   };
 };
+
+// auth actions
+
+export const register = userData => {
+  return axios
+    .post("/api/v1/users/register", userData)
+    .then(res => res.data)
+    .catch(err => Promise.reject(err.response.data.errors));
+};
