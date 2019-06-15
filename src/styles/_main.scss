@@ -36,3 +36,9 @@
     background-color: $main-color !important;
   }
 }
+
+.clickable {
+  &:hover {
+    cursor: pointer;
+  }
+}
