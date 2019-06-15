@@ -4,6 +4,8 @@ const Rental = require("../models/rental");
 
 router.get("", (req, res) => {
   Rental.find({})
+    .select("-bookings") // get without bookings
+    .exec()
     .then(foundRentals => {
       res.json(foundRentals);
     })
@@ -19,6 +21,9 @@ router.get("", (req, res) => {
 router.get("/:id", (req, res) => {
   const rentalId = req.params.id;
   Rental.findById(rentalId)
+    .populate("user", "username -_id")
+    .populate("bookings", "startAt endAt -_id")
+    .exec()
     .then(foundRental => {
       res.json(foundRental);
     })
