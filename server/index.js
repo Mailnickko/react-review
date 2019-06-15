@@ -6,6 +6,7 @@ const config = require("./config/dev");
 const Rental = require("./models/rental");
 const FakeDB = require("./fake-db");
 
+const bookingRoutes = require("./routes/bookings");
 const rentalRoutes = require("./routes/rentals");
 const userRoutes = require("./routes/users");
 
@@ -17,6 +18,7 @@ mongoose.connect(config.DB_URI).then(() => {
 app.use(bodyParser.json());
 app.use("/api/v1/rentals", rentalRoutes);
 app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/bookings", bookingRoutes);
 
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
