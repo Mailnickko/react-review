@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import RentalMap from "./RentalMap";
+import Booking from "components/booking/Booking";
 
 import RentalDetailsInfo from "./RentalDetailsInfo";
 import * as actions from "actions";
@@ -33,7 +34,9 @@ class RentalDetail extends React.Component {
               <div className="col-md-8">
                 <RentalDetailsInfo {...selectedRental} />
               </div>
-              <div className="col-md-4"> BOOKING</div>
+              <div className="col-md-4">
+                <Booking rental={selectedRental} />
+              </div>
             </div>
           </div>
         </section>
