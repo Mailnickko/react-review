@@ -7,12 +7,31 @@ import TYPES from "./types";
 
 const axiosInstance = axiosService.getInstance();
 
-export const fetchRentals = () => {
+const fetchRentalsInit = () => {
+  return {
+    type: TYPES.FETCH_RENTALS_INIT
+  };
+};
+
+const fetchRentalsFail = errors => {
+  return {
+    type: TYPES.FETCH_RENTALS_FAIL,
+    errors
+  };
+};
+
+export const fetchRentals = city => {
+  const url = city ? `/rentals?city=${city}` : "/rentals";
   return dispatch => {
+    dispatch(fetchRentalsInit());
+
     axiosInstance
-      .get(`/rentals`)
+      .get(url)
       .then(res => res.data || [])
-      .then(rentals => dispatch(fetchRentalsSuccess(rentals)));
+      .then(rentals => dispatch(fetchRentalsSuccess(rentals)))
+      .catch(({ response }) =>
+        dispatch(fetchRentalsFail(response.data.errors))
+      );
   };
 };
 
@@ -47,6 +66,13 @@ export const fetchRentalById = rentalId => {
       .then(res => res.data)
       .then(selectedRental => dispatch(fetchRentalByIdSuccess(selectedRental)));
   };
+};
+
+export const createRental = rentalData => {
+  return axiosInstance
+    .post("/rentals", rentalData)
+    .then(res => res.data)
+    .catch(err => Promise.reject(err.response.data.errors));
 };
 
 // auth actions
