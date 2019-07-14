@@ -81,13 +81,13 @@
   "users": [
     {
       "username": "Test User",
-      "email": "test@gmail.com",
-      "password": "testtest"
+      "email": "test@test.com",
+      "password": "password"
     },
     {
       "username": "Test User1",
-      "email": "test1@gmail.com",
-      "password": "testtest1"
+      "email": "test2@test.com",
+      "password": "password"
     }
   ]
 }

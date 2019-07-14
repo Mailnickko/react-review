@@ -11,8 +11,12 @@ const INITIAL_STATE = {
 
 export const rentalReducer = (state = INITIAL_STATE.rentals, action) => {
   switch (action.type) {
+    case TYPES.FETCH_RENTALS_INIT:
+      return { ...state, data: [], errors: [] };
     case TYPES.FETCH_RENTALS_SUCCESS:
       return { ...state, data: action.rentals };
+    case TYPES.FETCH_RENTALS_FAIL:
+      return Object.assign({}, state, { errors: action.errors, data: [] });
     default:
       return state;
   }

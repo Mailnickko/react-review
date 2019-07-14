@@ -19,7 +19,6 @@ function notAuthorized(res) {
 module.exports = {
   auth: (req, res) => {
     const { email, password } = req.body;
-    debugger;
     if (!password || !email) {
       return res.status(422).send({
         errors: [

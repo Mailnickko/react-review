@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Rental = require("../models/rental");
+const User = require("../models/user");
+const UserCtrl = require("../controllers/userController");
 
 router.get("", (req, res) => {
   const city = req.query.city;
