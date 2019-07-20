@@ -15,17 +15,22 @@ class FakeDB {
     const user2 = new User(this.users[1]);
     const user3 = new User(this.users[2]);
 
-    this.rentals.forEach(async rental => {
+    this.rentals.forEach((rental, i) => {
       const newRental = new Rental(rental);
       newRental.user = user;
       user.rentals.push(newRental);
-
-      await newRental.save();
+      newRental.save().catch(err => `Failed to save newRental at index ${i}`);
     });
 
-    await user.save();
-    await user2.save();
-    await user3.save();
+    const promises = [user.save(), user2.save(), user3.save()];
+
+    Promise.all(promises)
+      .then(() => console.log("All Saved"))
+      .catch(err => console.log("Something went wrong", err));
+
+    // await user.save().catch(err => console.log("Failed to saver user1"));
+    // await user2.save().catch(err => console.log("Failed to saver user2"));
+    // await user3.save().catch(err => console.log("Failed to saver user3"));
   }
 
   async seedDB() {

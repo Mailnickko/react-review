@@ -85,8 +85,13 @@
       "password": "password"
     },
     {
-      "username": "Test User1",
+      "username": "Test User2",
       "email": "test2@test.com",
+      "password": "password"
+    },
+    {
+      "username": "Test User3",
+      "email": "test3@test.com",
       "password": "password"
     }
   ]
