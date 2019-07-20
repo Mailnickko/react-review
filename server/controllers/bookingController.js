@@ -26,6 +26,18 @@ function isValidBooking(proposedBooking, rental) {
 }
 
 module.exports = {
+  getUserBookings: function(req, res) {
+    const user = res.locals.user;
+    Booking.where({ user })
+      .populate("rental")
+      .exec()
+      .then(foundBookings => {
+        return res.json(foundBookings);
+      })
+      .catch(err => {
+        return res.status(422).send({ errors: normalizeErrors(err.errors) });
+      });
+  },
   createBooking: function(req, res) {
     const { startAt, endAt, totalPrice, guests, days, rental } = req.body;
     const user = res.locals.user;
