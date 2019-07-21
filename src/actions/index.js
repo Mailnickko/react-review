@@ -7,6 +7,42 @@ import TYPES from "./types";
 
 const axiosInstance = axiosService.getInstance();
 
+// USER BOOKINGS ACTIONS ---------------------------
+
+const fetchUserBookingsInit = () => {
+  return {
+    type: TYPES.FETCH_USER_BOOKINGS_INIT
+  };
+};
+
+const fetchUserBookingsSuccess = userBookings => {
+  return {
+    type: TYPES.FETCH_USER_BOOKINGS_SUCCESS,
+    userBookings
+  };
+};
+
+const fetchUserBookingsFail = errors => {
+  return {
+    type: TYPES.FETCH_USER_BOOKINGS_FAIL,
+    errors
+  };
+};
+
+export const fetchUserBookings = () => {
+  return dispatch => {
+    dispatch(fetchUserBookingsInit());
+
+    axiosInstance
+      .get("/bookings/manage")
+      .then(res => res.data)
+      .then(userBookings => dispatch(fetchUserBookingsSuccess(userBookings)))
+      .catch(({ response }) =>
+        dispatch(fetchUserBookingsFail(response.data.errors))
+      );
+  };
+};
+
 const fetchRentalsInit = () => {
   return {
     type: TYPES.FETCH_RENTALS_INIT
@@ -73,6 +109,20 @@ export const createRental = rentalData => {
     .post("/rentals", rentalData)
     .then(res => res.data)
     .catch(err => Promise.reject(err.response.data.errors));
+};
+
+// USER RENTALS ACTIONS ---------------------------
+
+export const getUserRentals = () => {
+  return axiosInstance
+    .get("/rentals/manage")
+    .then(res => res.data, err => Promise.reject(err.response.data.errors));
+};
+
+export const deleteRental = rentalId => {
+  return axiosInstance
+    .delete(`/rentals/${rentalId}`)
+    .then(res => res.data, err => Promise.reject(err.response.data.errors));
 };
 
 // auth actions

@@ -10,6 +10,13 @@ const RentalDetailsInfo = props => {
       <h2 className={`rental-type ${category}`}>
         {rentalType(shared)} {category}
       </h2>
+      <div className="rental-owner">
+        <img
+          src="https://api.adorable.io/avatars/285/abott@adorable.png"
+          alt="owner"
+        />
+        <span>{rental.user && rental.user.username}</span>
+      </div>
       <h1 className="rental-title">{title}</h1>
       <h2 className="rental-city">{toUpperCase(city)}</h2>
       <div className="rental-room-info">
