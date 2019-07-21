@@ -70,6 +70,7 @@ class Header extends React.Component {
         <div className="container">
           <Link className="navbar-brand" to="/rentals">
             BookWithMe
+            <img src={process.env.PUBLIC_URL + "/img/react-logo.svg"} />
           </Link>
           <RentalSearchInput />
           <button
